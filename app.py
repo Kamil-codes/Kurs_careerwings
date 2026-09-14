@@ -422,8 +422,6 @@ def zapytaj():
     if "pytanie" not in request.form:return render_template("zapytaj.html", styl=styl)
     if tresc_pytania == "":
         return render_template("zapytaj.html",styl=styl,odpowiedz="Wpisz pytanie!")
-    if tresc_pytania == "":
-        return render_template("index.html", odpowiedz="Wpisz pytanie!")
     tresc_pytania = oczysc_tekst(tresc_pytania)
     if len(tresc_pytania) < MIN_DLUGOSC_PYTANIA:
         return render_template("index.html", odpowiedz="Za krótkie pytanie.")
@@ -435,7 +433,7 @@ def zapytaj():
         {tresc_pytania}
         </pytanie_uzytkownika>"""
     odpowiedz = waliduj_output(zapytaj_claude(tresc_do_wyslania, styl, system_prompt=SYSTEM_PROMPT_CZAT))
-    return render_template("index.html", odpowiedz=odpowiedz)
+    return render_template("zapytaj.html", styl=styl, odpowiedz=odpowiedz)
 
 @app.route("/analizuj", methods=["POST"])
 @limiter.limit("5 per minute")
