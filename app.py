@@ -437,7 +437,13 @@ def zapytaj():
     odpowiedz = waliduj_output(zapytaj_claude(tresc_do_wyslania, styl, system_prompt=SYSTEM_PROMPT_CZAT))
     return render_template("zapytaj.html", styl=styl, odpowiedz=odpowiedz)
 
-@app.route("/analizuj", methods=["GET", "POST"])
+@app.route("/analiza")
+@limiter.limit("5 per minute")
+@wymaga_logowania
+def analiza():
+    return render_template("analiza.html")
+
+@app.route("/analizuj", methods=["POST"])
 @limiter.limit("5 per minute")
 @wymaga_logowania
 def analizuj():
