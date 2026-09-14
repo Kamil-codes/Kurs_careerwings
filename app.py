@@ -440,13 +440,13 @@ def zapytaj():
 @app.route("/analiza")
 @limiter.limit("5 per minute")
 @wymaga_logowania
-def analiza():
+def analizuj():
     return render_template("analiza.html")
 
 @app.route("/analizuj", methods=["POST"])
 @limiter.limit("5 per minute")
 @wymaga_logowania
-def analizuj():
+def analiza():
     plik = request.files.get("plik")
     if not plik or plik.filename == "":
         return render_template("analiza.html", blad="Nie wybrano pliku. Wybierz plik CSV lub Excel i spróbuj ponownie.")
