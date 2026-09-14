@@ -94,7 +94,7 @@
             <h2>Rozmowa</h2>
             <div class="rozmowa-item">
                 <span>Historia rozmowy</span>
-                <a href="{{ url_for('pobierz_rozmowe') }}">Pobierz</a>
+                <a href="{{ url_for('pobierz_rozmowe') }}" class="przycisk-pobierz">Pobierz</a>
                 <form method="post" action="{{ url_for('usun_rozmowe') }}" style="display:inline;" onsubmit="return confirm('Czy na pewno chcesz usunąć całą historię rozmowy?');">
                     <button type="submit">Usuń</button>
                 </form>
