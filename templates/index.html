@@ -19,11 +19,11 @@
         <div class="user-log">        
             {% if session.get("nazwa_uzytkownika") %}
                 <span>Zalogowany: {{ session.get("nazwa_uzytkownika") }}</span>
-                <a href="{{ url_for('wyloguj') }}">Wyloguj</a>
-                <a href="{{ url_for('ustawienia') }}">Ustawienia</a>
+                <a href="{{url_for('wyloguj')}}">Wyloguj</a>
+                <a href="{{url_for('ustawienia')}}">Ustawienia</a>
             {% else %}
-                <a href="{{ url_for('logowanie') }}">Zaloguj</a>
-                <a href="{{ url_for('rejestracja') }}">Rejestracja</a>
+                <a href="{{url_for('logowanie')}}">Zaloguj</a>
+                <a href="{{url_for('rejestracja')}}">Rejestracja</a>
             {% endif %}
         </div>
     </nav>
