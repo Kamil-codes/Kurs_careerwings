@@ -413,7 +413,7 @@ def wyloguj():
     session.pop("nazwa_uzytkownika", None)
     return redirect(url_for("logowanie"))
 
-@app.route("/zapytaj", methods=["POST"])
+@app.route("/zapytaj", methods=["GET", "POST"])
 @limiter.limit("10 per minute")
 @wymaga_logowania
 def zapytaj():
@@ -435,7 +435,7 @@ def zapytaj():
     odpowiedz = waliduj_output(zapytaj_claude(tresc_do_wyslania, styl, system_prompt=SYSTEM_PROMPT_CZAT))
     return render_template("zapytaj.html", styl=styl, odpowiedz=odpowiedz)
 
-@app.route("/analizuj", methods=["POST"])
+@app.route("/analizuj", methods=["GET", "POST"])
 @limiter.limit("5 per minute")
 @wymaga_logowania
 def analizuj():
@@ -518,7 +518,7 @@ Nie dodawaj informacji, których nie ma w tekście."""
     except APIError as blad:
         return f"BŁĄD: {blad}"
 
-@app.route("/streszcz", methods=["POST"])
+@app.route("/streszcz", methods=["GET", "POST"])
 @limiter.limit("3 per minute")
 @wymaga_logowania
 def streszcz():
