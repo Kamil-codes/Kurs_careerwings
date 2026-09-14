@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polityka prywatności</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+            <h1>Polityka prywatności</h1>
+    </header>
+    <nav>
+        <div class="link">
+            <a href="/">Strona główna</a>
+            <a href="/zapytaj">Zapytaj AI</a>
+            <a href="/analiza">Analiza danych</a>
+            <a href="streszcz.html">Streszcz tekst</a>
+        </div>
+        <div class="user-log">        
+            {% if session.get("nazwa_uzytkownika") %}
+                <span>Zalogowany: {{ session.get("nazwa_uzytkownika") }}</span>
+                <a href="{{ url_for('wyloguj') }}">Wyloguj</a>
+                <a href="{{ url_for('ustawienia') }}">Ustawienia</a>
+            {% else %}
+                <a href="{{ url_for('logowanie') }}">Zaloguj</a>
+                <a href="{{ url_for('rejestracja') }}">Rejestracja</a>
+            {% endif %}
+        </div>
+    </nav>
+    <main class="container">
+        <section>
+            <p>
+                Ta strona jest projektem edukacyjnym stworzonym w ramach kursu
+                programowania. Aplikacja służy do demonstracji możliwości
+                wykorzystania sztucznej inteligencji oraz analizy danych.
+            </p>
+
+            <h2>1. Jakie dane są przechowywane?</h2>
+
+            <p>
+                Aplikacja może przechowywać dane podane podczas korzystania z niej,
+                w szczególności:
+            </p>
+
+            <ul>
+                <li>nazwę użytkownika,</li>
+                <li>hasło w postaci bezpiecznego hasha bcrypt,</li>
+                <li>historię rozmowy z asystentem,</li>
+                <li>wygenerowane raporty,</li>
+                <li>dane przesłane przez użytkownika do analizy.</li>
+            </ul>
+
+            <p>
+                Aplikacja nie przechowuje haseł użytkowników w postaci jawnej.
+            </p>
+
+            <h2>2. Pytania do AI</h2>
+
+            <p>
+                Pytania wysyłane do asystenta są przekazywane do usługi Claude
+                firmy Anthropic w celu wygenerowania odpowiedzi.
+            </p>
+
+            <p>
+                Nie należy przesyłać danych osobowych, haseł ani innych poufnych
+                informacji, których użytkownik nie powinien przekazywać zewnętrznej
+                usłudze.
+            </p>
+
+            <h2>3. Analiza plików</h2>
+
+            <p>
+                Aplikacja umożliwia przesyłanie plików CSV i XLSX w celu wykonania
+                podstawowej analizy danych.
+            </p>
+
+            <p>
+                Do analizy wykorzystywane są biblioteki Python, między innymi Pandas
+                i Matplotlib. Część informacji o danych jest również przekazywana
+                do Claude w celu przygotowania opisu i raportu.
+            </p>
+
+            <p>
+                Użytkownik powinien przesyłać wyłącznie pliki, do których ma prawo
+                i których zawartość może zostać przekazana do usługi AI.
+            </p>
+
+            <h2>4. Logowanie i sesja</h2>
+
+            <p>
+                Aplikacja wykorzystuje sesję Flask do utrzymania stanu zalogowania
+                użytkownika. Do prawidłowego działania logowania przeglądarka musi
+                obsługiwać cookies.
+            </p>
+
+            <h2>5. Bezpieczeństwo</h2>
+
+            <p>
+                Projekt zawiera podstawowe mechanizmy bezpieczeństwa, między innymi
+                hashowanie haseł za pomocą bcrypt, ograniczenie liczby zapytań,
+                walidację przesyłanych plików oraz podstawową ochronę przed
+                prompt injection.
+            </p>
+
+            <p>
+                Jest to jednak projekt edukacyjny i nie należy traktować go jako
+                rozwiązania przeznaczonego do przechowywania szczególnie wrażliwych
+                lub poufnych danych.
+            </p>
+
+            <h2>6. Usuwanie danych</h2>
+
+            <p>
+                Użytkownik może usunąć swoje konto wraz z zapisanymi w aplikacji
+                danymi za pomocą funkcji dostępnej w ustawieniach konta.
+            </p>
+
+            <h2>7. Projekt edukacyjny</h2>
+
+            <p>
+                Aplikacja została przygotowana w celach edukacyjnych. Jej działanie,
+                sposób przechowywania danych oraz zastosowane zabezpieczenia mogą
+                ulec zmianie w trakcie rozwoju projektu.
+            </p>
+
+            <p>
+                <strong>Data aktualizacji:</strong> 14.09.2026
+            </p>
+
+
+            
+            <h2>RODO – prawa użytkownika</h2> 
+            <p> W zakresie, w jakim aplikacja przetwarza dane osobowe, odbywa się to zgodnie z obowiązującymi przepisami o ochronie danych osobowych, w szczególności z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO). </p> 
+            <p> Użytkownik ma prawo do uzyskania informacji o przetwarzaniu swoich danych, dostępu do nich, ich poprawienia oraz – w przypadkach przewidzianych przepisami – ich usunięcia lub ograniczenia przetwarzania. Użytkownik może również skontaktować się z administratorem w sprawach związanych z przetwarzaniem danych. </p> 
+            <p> Jeżeli użytkownik uzna, że jego dane są przetwarzane niezgodnie z przepisami, może również wnieść skargę do właściwego organu nadzorczego. </p>
+        </section>
+    </main>
+    <footer>
+        <a href="/polityka-prywatnosci">Polityka prywatności</a>
+    </footer>
+</body>
+</html>

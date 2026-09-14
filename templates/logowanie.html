@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logowanie konta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        Logowanie konta
+    </header>
+    <nav>
+        <div class="link">
+            <a href="/">Strona główna</a>
+            <a href="/zapytaj">Zapytaj AI</a>
+            <a href="/analiza">Analiza danych</a>
+            <a href="streszcz.html">Streszcz tekst</a>
+        </div>
+        <div class="user-log">        
+                {% if session.get("nazwa_uzytkownika") %}
+                    <span>Zalogowany: {{ session.get("nazwa_uzytkownika") }}</span>
+                    <a href="{{ url_for('wyloguj') }}">Wyloguj</a>
+                    <a href="{{ url_for('ustawienia') }}">Ustawienia</a>
+                {% else %}
+                    <a href="{{ url_for('logowanie') }}">Zaloguj</a>
+                    <a href="{{ url_for('rejestracja') }}">Rejestracja</a>
+                {% endif %}
+        </div>
+    </nav>
+    <main class="container">
+        {% if sukces %}
+            <p>{{ sukces }}</p>
+        {% endif %}
+        {% if blad %}
+            <p>{{ blad }}</p>
+        {% endif %}
+        <form method="post" action="{{ url_for('logowanie') }}">
+            <label>Nazwa użytkownika: </label>
+            <input type="text" id="nazwa_uzytkownika" name="nazwa_uzytkownika" required autocomplete="username"><br>
+            <label for="haslo">Hasło: </label>
+            <input type="password" id="haslo" name="haslo" minlength="8" required autocomplete="current-password"><br>
+            <button type="submit">Zaloguj się</button>
+        </form>
+    </main>
+    <footer>
+        <a href="/polityka-prywatnosci">Polityka prywatności</a>
+    </footer>
+</body>

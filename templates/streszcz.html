@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streszcz AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+            <h1>Streszczenie tekstu</h1>
+    </header>
+    <nav>
+        <div class="link">
+                <a href="/">Strona główna</a>
+                <a href="/zapytaj">Zapytaj AI</a>
+                <a href="/analiza">Analiza danych</a>
+            </div>
+            <div class="user-log">        
+                {% if session.get("nazwa_uzytkownika") %}
+                    <span>Zalogowany: {{ session.get("nazwa_uzytkownika") }}</span>
+                    <a href="{{ url_for('wyloguj') }}">Wyloguj</a>
+                    <a href="{{ url_for('ustawienia') }}">Ustawienia</a>
+                {% else %}
+                    <a href="{{ url_for('logowanie') }}">Zaloguj</a>
+                    <a href="{{ url_for('rejestracja') }}">Rejestracja</a>
+                {% endif %}
+        </div>
+    </nav>
+    <main class="container">
+        <form action="/streszcz" method="POST">
+            <label>Jaki tekst ma streścić AI:</label><br>
+            <textarea name="streszcz" id="pytanie" rows="4"></textarea><br>
+            <button type="submit">Wyślij</button>
+        </form>
+        <div class="answer-box">{% if odpowiedz %} <p>{{ odpowiedz }}</p> {% else %} <p>Tutaj pojawi się streszczenie AI.</p> {% endif %}
+        </div>
+    </main>
+    <footer>
+        <a href="/polityka-prywatnosci">Polityka prywatności</a>
+    </footer>
+</body>
+</html>

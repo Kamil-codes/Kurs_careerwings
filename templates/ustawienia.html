@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zapytaj AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Ustawienia</h1>
+    </header>
+    <main class="container">
+        <nav>
+            <div class="link">
+                <a href="/">Strona główna</a>
+                <a href="/zapytaj">Zapytaj AI</a>
+                <a href="/analiza">Analiza danych</a>
+                <a href="streszcz.html">Streszcz tekst</a>
+            </div>
+            <div class="user-log">        
+                {% if session.get("nazwa_uzytkownika") %}
+                    <span>Zalogowany: {{ session.get("nazwa_uzytkownika") }}</span>
+                    <a href="{{ url_for('wyloguj') }}">Wyloguj</a>
+                {% else %}
+                    <a href="{{ url_for('logowanie') }}">Zaloguj</a>
+                    <a href="{{ url_for('rejestracja') }}">Rejestracja</a>
+                {% endif %}
+            </div>
+        </nav>
+        <header>
+            <h1>Ustawienia strony</h1>
+        </header>
+        <main class="container">
+            <h1>Ustawienia konta</h1>
+            <h2>Zmiana nazwy użytkownika</h2>
+            <form method="post" action="/zmien-nazwe">
+                <label for="nowa_nazwa">Nowa nazwa użytkownika:</label>
+                <input type="text" id="nowa_nazwa" name="nowa_nazwa" required><br>
+                <button type="submit">Zmień nazwę</button>
+            </form>
+            {% if sukces_n %}
+                <p>{{ sukces_n }}</p>
+            {% endif %}
+            <h2>Zmiana hasła</h2>
+            {% if blad %}
+                <p>{{ blad }}</p>
+            {% endif %}
+            {% if sukces_h %}
+                <p>{{ sukces_h }}</p>
+            {% endif %}
+            <form method="post" action="/zmien-haslo">
+                <label for="stare_haslo">Obecne hasło:</label>
+                <input type="password" id="stare_haslo" name="stare_haslo" required><br>
+                <label for="nowe_haslo">Nowe hasło:</label>
+                <input type="password" id="nowe_haslo" name="nowe_haslo" minlength="8" required><br>
+                <label for="powtorz_haslo">Powtórz nowe hasło:</label>
+                <input type="password" id="powtorz_haslo" name="powtorz_haslo" minlength="8" required><br>
+                <button type="submit">Zmień hasło</button>
+            </form>
+            <h2>Usuń konto</h2>
+            <form method="post" action="{{ url_for('usun_konto') }}" onsubmit="return confirm('Czy na pewno chcesz usunąć konto? Wszystkie Twoje dane zostaną usunięte. Tej operacji nie można cofnąć.');">
+            <button type="submit">Usuń konto</button>
+            </form>
+            <h1>Ustawienia plików przechowywanych</h1>
+            <h2>Raporty</h2>
+            {% if raporty %}
+                <form id="formularz-raporty">
+            {% for raport in raporty %}
+                <div class="raport-item">
+                    <label>
+                        <input type="checkbox" name="raporty" value="{{ raport.nazwa }}" class="raport-checkbox">
+                        {{ raport.nazwa }}
+                    </label>
+                    <a href="{{ url_for('pokaz_raport', nazwa_pliku=raport.nazwa) }}"target="_blank">Podgląd</a>
+                    <a href="{{ url_for('pobierz_raport',nazwa_pliku=raport.nazwa) }}">Pobierz</a>
+                    <button type="button"onclick="usunPojedynczyRaport('{{ raport.nazwa }}')">Usuń</button>
+                </div>
+            {% endfor %}
+            </form> 
+            <hr> 
+            <div class="raporty-operacje">
+            <label>
+                <input type="radio" name="tryb" value="zaznaczone"checked>Zaznaczone
+            </label>
+            <label>
+                <input type="radio" name="tryb" value="wszystkie">Wszystkie
+            </label>
+            <button type="button" onclick="pobierzRaporty()"> Pobierz </button>
+            <button type="button" onclick="usunRaporty()"> Usuń</button>
+            </div> 
+            <script> 
+                function pobierzRaporty() { const tryb = document.querySelector( 'input[name="tryb"]:checked' ).value; const formularz = document.createElement("form"); formularz.method = "POST"; formularz.action = "{{ url_for('pobierz_raporty') }}"; const trybInput = document.createElement("input"); trybInput.type = "hidden"; trybInput.name = "tryb"; trybInput.value = tryb; formularz.appendChild(trybInput); if (tryb === "zaznaczone") { const zaznaczone = document.querySelectorAll( ".raport-checkbox:checked" ); if (zaznaczone.length === 0) { alert("Zaznacz przynajmniej jeden raport."); return; } zaznaczone.forEach(function(checkbox) { const input = document.createElement("input"); input.type = "hidden"; input.name = "raporty"; input.value = checkbox.value; formularz.appendChild(input); }); } document.body.appendChild(formularz); formularz.submit(); } function usunRaporty() { const tryb = document.querySelector( 'input[name="tryb"]:checked' ).value; if (tryb === "wszystkie") { if (!confirm( "Czy na pewno chcesz usunąć wszystkie raporty?" )) { return; } } else { const zaznaczone = document.querySelectorAll( ".raport-checkbox:checked" ); if (zaznaczone.length === 0) { alert("Zaznacz przynajmniej jeden raport."); return; } if (!confirm( "Czy na pewno chcesz usunąć zaznaczone raporty?" )) { return; } } const formularz = document.createElement("form"); formularz.method = "POST"; formularz.action = "{{ url_for('usun_raporty') }}"; const trybInput = document.createElement("input"); trybInput.type = "hidden"; trybInput.name = "tryb"; trybInput.value = tryb; formularz.appendChild(trybInput); if (tryb === "zaznaczone") { const zaznaczone = document.querySelectorAll( ".raport-checkbox:checked" ); zaznaczone.forEach(function(checkbox) { const input = document.createElement("input"); input.type = "hidden"; input.name = "raporty"; input.value = checkbox.value; formularz.appendChild(input); }); } document.body.appendChild(formularz); formularz.submit(); } function usunPojedynczyRaport(nazwaPliku) { if (!confirm( "Czy na pewno chcesz usunąć ten raport?" )) { return; } const formularz = document.createElement("form"); formularz.method = "POST"; formularz.action = "/raport/" + encodeURIComponent(nazwaPliku) + "/usun"; document.body.appendChild(formularz); formularz.submit(); } 
+            </script>
+            {% else %}
+            <p>Nie masz jeszcze żadnych raportów.</p>
+            {% endif %}
+            <h2>Rozmowa</h2>
+            <div class="rozmowa-item">
+                <span>Historia rozmowy</span>
+                <a href="{{ url_for('pobierz_rozmowe') }}">Pobierz</a>
+                <form method="post" action="{{ url_for('usun_rozmowe') }}" style="display:inline;" onsubmit="return confirm('Czy na pewno chcesz usunąć całą historię rozmowy?');">
+                    <button type="submit">Usuń</button>
+                </form>
+            </div>
+        </main>
+        <footer>
+            <a href="/polityka-prywatnosci">Polityka prywatności</a>
+        </footer>
+    </main>
+</body>
+</html>

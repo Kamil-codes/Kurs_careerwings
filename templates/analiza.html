@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Analiza danych </title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>Analizuj dane </h1>
+        </header>
+        <nav>
+            <div class="link">
+                    <a href="/">Strona główna</a>
+                    <a href="/zapytaj">Zapytaj AI</a>
+                    <a href="streszcz.html">Streszcz tekst</a>
+                </div>
+                <div class="user-log">        
+                    {% if session.get("nazwa_uzytkownika") %}
+                        <span>Zalogowany: {{ session.get("nazwa_uzytkownika") }}</span>
+                        <a href="{{ url_for('wyloguj') }}">Wyloguj</a>
+                        <a href="{{ url_for('ustawienia') }}">Ustawienia</a>
+                    {% else %}
+                        <a href="{{ url_for('logowanie') }}">Zaloguj</a>
+                        <a href="{{ url_for('rejestracja') }}">Rejestracja</a>
+                    {% endif %}
+            </div>
+        </nav>
+        <main class="container">
+        <form action="/analizuj" method="POST" enctype="multipart/form-data">
+            <input type="file" name="plik" accept=".csv,.xlsx"><br>
+            <button type="submit">Wyślij plik </button>
+        </form>
+        {% if blad %}
+            <div class="answer-box">
+            <p><strong>Ups! </strong> {{ blad }} </p>
+            </div>
+        {% endif %}
+        {% if podsumowanie_ai %}
+            <div class="answer-box">
+            <p><strong>Plik </strong> {{ nazwa_pliku }} </p>
+            <hr>
+            <p>📄 <a href="{{ link_do_raportu }}" target="_blank">
+            Otwórz raport jako osobną stronę HTML </a> </p>
+            <hr>
+                <div id="podsumowanie"> </div>
+            <script src="https:/cdn.jsdelivr.net/npm/marked/marked.min.js"> </script>
+            <script>
+            document.getElementById("podsumowanie").innerHTML = marked.parse(`{{ podsumowanie_ai | safe }}`);
+            </script>
+            </div>
+        {% endif %}
+        </main>
+        <footer>
+            <a href="/polityka-prywatnosci">Polityka prywatności</a>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona głowna</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Strona główna</h1>
+    </header>
+    <nav>
+        <div class="link">
+            <a href="/zapytaj">Zapytaj AI</a>
+            <a href="/analiza">Analiza danych</a>
+            <a href="streszcz.html">Streszcz tekst</a>
+        </div>
+        <div class="user-log">        
+            {% if session.get("nazwa_uzytkownika") %}
+                <span>Zalogowany: {{ session.get("nazwa_uzytkownika") }}</span>
+                <a href="{{ url_for('wyloguj') }}">Wyloguj</a>
+                <a href="{{ url_for('ustawienia') }}">Ustawienia</a>
+            {% else %}
+                <a href="{{ url_for('logowanie') }}">Zaloguj</a>
+                <a href="{{ url_for('rejestracja') }}">Rejestracja</a>
+            {% endif %}
+        </div>
+    </nav>
+    <section id="formularzai">
+        {% if session.get("nazwa_uzytkownika") %}
+        <form action="/zapytaj" method="POST">
+            <label>Jaki chcesz prompt do chat AI?<small> (jeżeli nie chcesz ustawić jakiegoś promptu to kliknij prrzycisk <i>pomiń</i>)</small></label>
+            <select name="styl" id="styl">
+                <option value="0">Zwykły/podstawowy</option>
+                <option value="1">krótko</option>
+                <option value="2">długo</option>
+                <option value="3">ekspert</option>
+                <option value="4">nauczyciel</option>
+            </select><br>
+            <button type="submit">Dalej </button>
+            <button id="styl" name="styl" value="" type="submit"> Pomiń</button>
+        </form><br>
+        {% else %}
+        <p>Aby korzystać z Chat AI, musisz się zalogować.</p>
+        <a href="{{ url_for('logowanie') }}">Zaloguj się</a>
+        <span> lub </span>
+        <a href="{{ url_for('rejestracja') }}">utwórz konto</a>
+    {% endif %}
+    </section>
+    <main class="container">
+        <h2>Witaj na stronie!</h2>
+        <p>Ta aplikacja umożliwia korzystanie z kilku funkcji wykorzystujących sztuczną inteligencję.</p>
+        <ul>
+            <li>🤖 Zadawanie pytań asystentowi AI</li>
+            <li>📊 Analizowanie danych z plików CSV i XLSX</li>
+            <li>📝 Streszczanie tekstów</li>
+            <li>📄 Generowanie raportów z analizy danych</li>
+        </ul>
+        <p>Wybierz interesującą Cię funkcję z menu powyżej.</p>
+        <p><strong>Uwaga:</strong> aplikacja jest projektem edukacyjnym. Nie przesyłaj haseł ani innych poufnych informacji.</p>
+    </main>
+    <footer>
+        <a href="/polityka-prywatnosci">Polityka prywatności</a>
+    </footer>
+</body>
+</html>

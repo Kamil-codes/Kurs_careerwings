@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    font-family: "Georgia", "Times New Roman", serif;
+    background-color: #fafafa;
+    color: #222;
+    line-height: 1.6;
+}
+.raport {
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 48px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+.raport-naglowek {
+    border-bottom: 3px solid #0097e6;
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+}
+.raport-naglowek h1 {
+    margin: 0 0 8px 0;
+    font-size: 32px;
+    color: #1a1a2e;
+}
+.badge {
+    display: inline-block;
+    background-color: #0097e6;
+    color: white;
+    font-family: system-ui, sans-serif;
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-right: 8px;
+}
+.metadane {
+    font-family: system-ui, sans-serif;
+    font-size: 14px;
+    color: #666;
+    margin-top: 12px;
+}
+.raport-tresc h1 {
+    font-size: 26px;
+    color: #1a1a2e;
+}
+.raport-tresc h2, .raport-tresc h3 {
+    color: #0097e6;
+}
+.wykres {
+    text-align: center;
+    margin: 32px 0;
+}
+.wykres img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+@media print {
+    body { background: white; }
+    .raport { box-shadow: none; }
+}
+.badge {
+    display: inline-block;
+    background-color: #0097e6;
+    color: white;
+    font-family: system-ui, sans-serif;
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-right: 8px;
+}
+.metadane {
+    font-family: system-ui, sans-serif;
+    font-size: 14px;
+    color: #666;
+    margin-top: 12px;
+}
+.raport-tresc h1 {
+    font-size: 26px;
+    color: #1a1a2e;
+}
+.raport-tresc h2, .raport-tresc h3 {
+    color: #0097e6;
+}
+.wykres {
+    text-align: center;
+    margin: 32px 0;
+}
+.wykres img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+@media print {
+    body { background: white; }
+    .raport { box-shadow: none; }
+}
