@@ -10,11 +10,11 @@
     <header>Rejestracja konta</header>
     <nav>
         <div class="link">
-                <a href="/">Strona główna</a>
-                <a href="/zapytaj">Zapytaj AI</a>
-                <a href="/analiza">Analiza danych</a>
-                <a href="/streszcz.html">Streszcz tekst</a>
-            </div>
+            <a href="{{url_for('')}}">Strona główna</a>
+            <a href="{{url_for('zapytaj')}}">Zapytaj AI</a>
+            <a href="{{url_for('analiza')}}">Analiza danych</a>
+            <a href="{{url_for('streszcz')}}">Streszcz tekst</a>
+        </div>
             <div class="user-log">        
                 {% if session.get("nazwa_uzytkownika") %}
                     <span>Zalogowany: {{ session.get("nazwa_uzytkownika") }}</span>
