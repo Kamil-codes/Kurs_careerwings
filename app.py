@@ -417,6 +417,8 @@ def wyloguj():
 @limiter.limit("10 per minute")
 @wymaga_logowania
 def zapytaj():
+    if request.method == "GET":
+        return render_template("zapytaj.html", styl="0")
     tresc_pytania = request.form.get("pytanie", "").strip()
     styl = request.form.get("styl", "0")
     if "pytanie" not in request.form:return render_template("zapytaj.html", styl=styl)
@@ -522,6 +524,8 @@ Nie dodawaj informacji, których nie ma w tekście."""
 @limiter.limit("3 per minute")
 @wymaga_logowania
 def streszcz():
+    if request.method == "GET":
+        return render_template("streszcz.html")
     tresc_streszcz = request.form.get("streszcz", "").strip()
     if tresc_streszcz == "":
         return render_template("streszcz.html", odpowiedz="Wpisz tekst do streszczenia")
