@@ -5,7 +5,7 @@
 body {
     margin: 0;
     font-family: 'Times New Roman', Times, serif;
-    background-color: Plum;
+    background-color: Cornsilk;
     color: #2c2c54;
     text-align: center;
     min-height: 100vh;
@@ -32,23 +32,31 @@ main {
     flex: 1;
 }
 
-.link{
+.link {
     float: left;
     width: 60%;
+    text-align: left;
 }
 
-.user-log{
+.user-log {
     float: left;
     width: 40%;
+    text-align: right;
+}
+
+nav {
+    background-color: #f5f5dc;
+    padding: 10px;
+    overflow: hidden;
+    border-bottom: 2px solid #ddd;
 }
 
 .link a,
-.user-log a{
-    display: inline-block;
+.user-log a {
     padding: 10px 15px;
-    margin: 5px;
-    color: black;
-    text-decoration: none;
+    margin: 3px;
+    border-radius: 12px;
+    display: inline-block;
 }
 
 .link a{
@@ -98,8 +106,23 @@ h2{
     margin-top: 20px;
 }
 
+form {
+    margin: 20px auto;
+    text-align: center;
+}
+
+form input,
+form select,
+form textarea {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 textarea {
-    width: 100%;
+    width: 90%;
+    margin: 10px auto;
+    display: block;
     padding: 12px;
     font-size: 16px;
     font-family: inherit;
@@ -185,7 +208,8 @@ ul {
     .link a,
     .user-log a {
         display: block;
-        margin: 5px 0;
+        width: 90%;
+        margin: 5px auto;
     }
 
     .container {
