@@ -55,8 +55,10 @@
                 <button type="submit">Zmień hasło</button>
             </form>
             <h2>Usuń konto</h2>
-            <form method="post" action="{{ url_for('usun_konto') }}" onsubmit="return confirm('Czy na pewno chcesz usunąć konto? Wszystkie Twoje dane zostaną usunięte. Tej operacji nie można cofnąć.');">
-            <button type="submit">Usuń konto</button>
+            <form method="POST" action="{{ url_for('usun_konto') }}">
+            <button type="submit" onclick="return confirm('Czy na pewno chcesz usunąć konto? Wszystkie Twoje dane zostaną usunięte. Tej operacji nie można cofnąć.');">
+            Usuń konto
+            </button>
             </form>
             <h1>Ustawienia plików przechowywanych</h1>
             <h2>Raporty</h2>
