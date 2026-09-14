@@ -33,7 +33,7 @@ footer{
 }
 
 .link a,
-.user-log a {
+.user-log a{
     display: inline-block;
     padding: 10px 15px;
     margin: 5px;
@@ -41,17 +41,17 @@ footer{
     text-decoration: none;
 }
 
-.user-log a [href$="ustawienia"]{
+.user-log a[href$="ustawienia"]{
     background-color: LightSteelBlue;
     border-radius: 12px;
 }
 
-.user-log a [href$="logowanie"]{
+.user-log a[href$="logowanie"]{
     background-color: PaleGreen;
     border-radius: 12px;
 }
 
-.user-log a [href$="rejestracja"]{
+.user-log a[href$="rejestracja"]{
     background-color: Lavender;
     border-radius: 12px;
 }
@@ -188,5 +188,16 @@ ul {
 
     textarea {
         width: 100%;
+    }
+    
+    input[type="text"],
+    input[type="password"],
+    input[type="file"],
+    select {
+        max-width: 100%;
+    }
+
+    button {
+        max-width: 100%;
     }
 }
