@@ -177,6 +177,21 @@ a:hover {
     text-decoration: underline;
 }
 
+.przycisk-pobierz {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 24px;
+    background-color: #0097e6;
+    color: rgb(29, 2, 52);
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.przycisk-pobierz:hover {
+    background-color: #0077c2;
+    text-decoration: underline;
+}
+
 #INFO {
     margin: 30px auto;
     padding: 20px;
