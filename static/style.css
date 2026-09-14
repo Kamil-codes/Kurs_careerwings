@@ -5,8 +5,64 @@
 body {
     margin: 0;
     font-family: 'Times New Roman', Times, serif;
-    background-color: #f0f0Af;
+    background-color: darkmagenta;
     color: #2c2c54;
+    text-align: center;
+}
+
+header{
+    background-color: LightGoldenrodYellow;
+    text-align: center;
+    clear: both;
+}
+
+footer{
+    background-color: PaleGoldenrod;
+    text-align: center;
+    clear: both;
+}
+
+.link{
+    float: left;
+    width: 60%;
+}
+
+.user-log{
+    float: left;
+    width: 40%;
+}
+
+.link a,
+.user-log a {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 5px;
+    color: black;
+    text-decoration: none;
+}
+
+.user-log a [href$="ustawienia"]{
+    background-color: LightSteelBlue;
+    border-radius: 12px;
+}
+
+.user-log a [href$="logowanie"]{
+    background-color: PaleGreen;
+    border-radius: 12px;
+}
+
+.user-log a [href$="rejestracja"]{
+    background-color: Lavender;
+    border-radius: 12px;
+}
+
+.user-log a[href$="wyloguj"] {
+    background-color: Brown;
+    border-radius: 12px;
+}
+
+main{
+    clear: both;
 }
 
 .container {
@@ -19,7 +75,11 @@ body {
 }
 
 h1 {
-    margin-top: 1;
+    margin-top: 10px;
+}
+
+h2{
+    margin-top: 20px;
 }
 
 textarea {
@@ -30,6 +90,31 @@ textarea {
     border: 1px dashed rgb(136, 49, 49);
     border-radius: 8px;
     resize: vertical;
+}
+
+select {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    font-size: 16px;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+input[type="file"] {
+    margin: 15px 0;
+}
+
+form {
+    margin: 20px 0;
 }
 
 button {
@@ -57,5 +142,51 @@ button:hover {
 
 .check{
     font-size: 14px; 
-    color: #666;
+    color: grey;
+}
+
+a {
+    color: #273c75;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    text-align: left;
+    line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+    .link,
+    .user-log {
+        float: none;
+        width: 100%;
+    }
+
+    .link a,
+    .user-log a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .container {
+        width: 90%;
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    textarea {
+        width: 100%;
+    }
 }
