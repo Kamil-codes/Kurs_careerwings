@@ -484,7 +484,7 @@ def analiza():
                 "analiza.html",
                 blad="Wykryto podejrzaną treść w danych CSV/XLSX."
             )
-    podsumowanie = waliduj_output(zapytaj_claude(prompt))
+    podsumowanie = waliduj_output(zapytaj_claude(prompt, styl='0'))
 
     nazwa_bezpieczna = secure_filename(plik.filename)
     nazwa_bez_rozszerzenia = os.path.splitext(nazwa_bezpieczna)[0]
