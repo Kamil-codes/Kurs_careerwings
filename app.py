@@ -307,7 +307,7 @@ WAŻNE:
 def stworz_wykres(df):
     kolumny_liczbowe = df.select_dtypes(include="number").columns
     if len(kolumny_liczbowe) == 0:
-    return None
+        return None
     kolumna = kolumny_liczbowe[0]
     plt.figure(figsize=(8, 4))
     df[kolumna].hist(bins=20, color="#0097e6", edgecolor="white")
