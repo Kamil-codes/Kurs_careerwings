@@ -55,27 +55,25 @@
                 <button type="submit">Zmień hasło</button>
             </form>
             <h2>Usuń konto</h2>
-            <form method="POST" action="{{ url_for('usun_konto') }}">
+            <form method="POST" action="{{ url_for('usun_konto') }}" onsubmit="return confirm('Czy na pewno chcesz usunąć konto? Tej operacji nie można cofnąć.');">
             <label>Tej operacji nie można cofnąć.</label>
             <button type="submit">Usuń konto</button>
             </form>
             <h1>Ustawienia plików przechowywanych</h1>
             <h2>Raporty</h2>
             {% if raporty %}
-                <form id="formularz-raporty">
-            {% for raport in raporty %}
-                <div class="raport-item">
-                    <label>
-                        {{ raport.nazwa }}
-                    </label>
-                    <a href="{{ url_for('pokaz_raport', nazwa_pliku=raport.nazwa) }}"target="_blank">Podgląd</a>
-                    <a href="{{ url_for('pobierz_raport',nazwa_pliku=raport.nazwa) }}">Pobierz</a>
-                    <button type="button"onclick="usunPojedynczyRaport('{{ raport.nazwa }}')">Usuń</button>
-                </div>
-            {% endfor %}
-                </form>
+                {% for raport in raporty %}
+                    <div class="raport-item">
+                        <label>{{ raport.nazwa }}</label>
+                        <a href="{{ url_for('pokaz_raport', nazwa_pliku=raport.nazwa) }}" target="_blank">Podgląd</a>
+                        <a href="{{ url_for('pobierz_raport', nazwa_pliku=raport.nazwa) }}">Pobierz</a>
+                        <form method="post" action="{{ url_for('usun_pojedynczy_raport', nazwa_pliku=raport.nazwa) }}" style="display:inline;" onsubmit="return confirm('Czy na pewno chcesz usunąć ten raport?');">
+                            <button type="submit">Usuń</button>
+                        </form>
+                    </div>
+                {% endfor %}
             {% else %}
-            <p>Nie masz jeszcze żadnych raportów.</p>
+                <p>Nie masz jeszcze żadnych raportów.</p>
             {% endif %}
             <h2>Rozmowa</h2>
             <div class="rozmowa-item">
