@@ -66,7 +66,6 @@
             {% for raport in raporty %}
                 <div class="raport-item">
                     <label>
-                        <input type="checkbox" name="raporty" value="{{ raport.nazwa }}" class="raport-checkbox">
                         {{ raport.nazwa }}
                     </label>
                     <a href="{{ url_for('pokaz_raport', nazwa_pliku=raport.nazwa) }}"target="_blank">Podgląd</a>
@@ -74,21 +73,7 @@
                     <button type="button"onclick="usunPojedynczyRaport('{{ raport.nazwa }}')">Usuń</button>
                 </div>
             {% endfor %}
-            </form> 
-            <hr> 
-            <div class="raporty-operacje">
-            <label>
-                <input type="radio" name="tryb" value="zaznaczone"checked>Zaznaczone
-            </label>
-            <label>
-                <input type="radio" name="tryb" value="wszystkie">Wszystkie
-            </label>
-            <button type="button" onclick="pobierzRaporty()"> Pobierz </button>
-            <button type="button" onclick="usunRaporty()"> Usuń</button>
-            </div> 
-            <script> 
-                function pobierzRaporty() { const tryb = document.querySelector( 'input[name="tryb"]:checked' ).value; const formularz = document.createElement("form"); formularz.method = "POST"; formularz.action = "{{ url_for('pobierz_raporty') }}"; const trybInput = document.createElement("input"); trybInput.type = "hidden"; trybInput.name = "tryb"; trybInput.value = tryb; formularz.appendChild(trybInput); if (tryb === "zaznaczone") { const zaznaczone = document.querySelectorAll( ".raport-checkbox:checked" ); if (zaznaczone.length === 0) { alert("Zaznacz przynajmniej jeden raport."); return; } zaznaczone.forEach(function(checkbox) { const input = document.createElement("input"); input.type = "hidden"; input.name = "raporty"; input.value = checkbox.value; formularz.appendChild(input); }); } document.body.appendChild(formularz); formularz.submit(); } function usunRaporty() { const tryb = document.querySelector( 'input[name="tryb"]:checked' ).value; if (tryb === "wszystkie") { if (!confirm( "Czy na pewno chcesz usunąć wszystkie raporty?" )) { return; } } else { const zaznaczone = document.querySelectorAll( ".raport-checkbox:checked" ); if (zaznaczone.length === 0) { alert("Zaznacz przynajmniej jeden raport."); return; } if (!confirm( "Czy na pewno chcesz usunąć zaznaczone raporty?" )) { return; } } const formularz = document.createElement("form"); formularz.method = "POST"; formularz.action = "{{ url_for('usun_raporty') }}"; const trybInput = document.createElement("input"); trybInput.type = "hidden"; trybInput.name = "tryb"; trybInput.value = tryb; formularz.appendChild(trybInput); if (tryb === "zaznaczone") { const zaznaczone = document.querySelectorAll( ".raport-checkbox:checked" ); zaznaczone.forEach(function(checkbox) { const input = document.createElement("input"); input.type = "hidden"; input.name = "raporty"; input.value = checkbox.value; formularz.appendChild(input); }); } document.body.appendChild(formularz); formularz.submit(); } function usunPojedynczyRaport(nazwaPliku) { if (!confirm( "Czy na pewno chcesz usunąć ten raport?" )) { return; } const formularz = document.createElement("form"); formularz.method = "POST"; formularz.action = "/raport/" + encodeURIComponent(nazwaPliku) + "/usun"; document.body.appendChild(formularz); formularz.submit(); } 
-            </script>
+                </form>
             {% else %}
             <p>Nie masz jeszcze żadnych raportów.</p>
             {% endif %}
