@@ -673,40 +673,6 @@ def pobierz_raport(nazwa_pliku):
         return "Nie znaleziono raportu.", 404
     return send_file(sciezka,as_attachment=True,download_name=nazwa_pliku)
 
-@app.route("/raporty/pobierz", methods=["POST"])
-@wymaga_logowania
-def pobierz_raporty():
-    nazwa_uzytkownika = secure_filename(session["nazwa_uzytkownika"])
-    folder = os.path.join(FOLDER_UZYTKOWNIKOW,nazwa_uzytkownika,"raporty")
-    if not os.path.isdir(folder):
-        return "Nie znaleziono raportów.", 404
-    try:
-        tryb = request.form.get("tryb", "zaznaczone")
-        if tryb == "wszystkie":
-            raporty = [
-                plik for plik in os.listdir(folder)
-                if plik.endswith(".html")
-            ]
-        else:
-            raporty = request.form.getlist("raporty")
-        if not raporty:
-            return redirect(url_for("ustawienia"))
-        bufor = io.BytesIO()
-        with zipfile.ZipFile(
-            bufor,"w",zipfile.ZIP_DEFLATED
-        ) as zip_file:
-            for nazwa_pliku in raporty:
-                nazwa_pliku = secure_filename(nazwa_pliku)
-                if not nazwa_pliku.endswith(".html"):
-                    continue
-                sciezka = os.path.join(folder, nazwa_pliku)
-                if os.path.isfile(sciezka):
-                    zip_file.write(sciezka,arcname=nazwa_pliku)
-        bufor.seek(0)
-        return send_file(bufor,as_attachment=True,download_name="raporty.zip",mimetype="application/zip")
-    except OSError:
-        return "Nie udało się przygotować raportów.", 500
-
 @app.route("/raport/<nazwa_pliku>/usun", methods=["POST"])
 @wymaga_logowania
 def usun_pojedynczy_raport(nazwa_pliku):
@@ -720,38 +686,6 @@ def usun_pojedynczy_raport(nazwa_pliku):
         return "Nie znaleziono raportu.", 404
     os.remove(sciezka)
     return redirect(url_for("ustawienia"))
-
-@app.route("/raporty/usun", methods=["POST"])
-@wymaga_logowania
-def usun_raporty():
-    nazwa_uzytkownika = secure_filename(session["nazwa_uzytkownika"])
-    folder = os.path.join(FOLDER_UZYTKOWNIKOW,nazwa_uzytkownika,"raporty")
-    if not os.path.isdir(folder):
-        return redirect(url_for("ustawienia"))
-    try:
-        tryb = request.form.get("tryb", "zaznaczone")
-        if tryb == "wszystkie":
-            raporty = [
-                plik
-                for plik in os.listdir(folder)
-                if plik.endswith(".html")
-            ]
-        else:
-            raporty = request.form.getlist("raporty")
-        for nazwa_pliku in raporty:
-            nazwa_pliku = secure_filename(nazwa_pliku)
-            if not nazwa_pliku.endswith(".html"):
-                continue
-            sciezka = os.path.join(folder, nazwa_pliku)
-            if os.path.isfile(sciezka):
-                os.remove(sciezka)
-        return redirect(url_for("ustawienia"))
-    except OSError:
-        return render_template(
-            "ustawienia.html",
-            raporty=pobierz_raporty_uzytkownika(),
-            blad="Nie udało się usunąć raportów."
-        )
 
 @app.route("/rozmowa/pobierz")
 @wymaga_logowania
