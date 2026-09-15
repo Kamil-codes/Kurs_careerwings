@@ -309,23 +309,18 @@ def stworz_wykres(df):
         kolumny_liczbowe = df.select_dtypes(include="number").columns[:MAX_WYKRESOW]
         if len(kolumny_liczbowe) == 0:
             return None
-        fig, axes = plt.subplots(
-            len(kolumny_liczbowe),
-            1,
-            figsize=(8, 4 * len(kolumny_liczbowe))
-        )
+        fig, axes = plt.subplots(len(kolumny_liczbowe), 1, figsize=(8, 4 * len(kolumny_liczbowe)))
         if len(kolumny_liczbowe) == 1:
             axes = [axes]
         for ax, kolumna in zip(axes, kolumny_liczbowe):
             df[kolumna].hist(ax=ax, bins=20, color="#0097e6", edgecolor="white")
             ax.set_title(f"Rozkład wartości: {kolumna}")
-        
         plt.tight_layout()
         bufor = io.BytesIO()
-        plt.savefig(bufor, format="png")
-        plt.close()
-        bufor.seek(0)
-        return base64.b64encode(bufor.read()).decode("utf-8")
+        plt.savefig(bufor, format="png", bbox_inches="tight")
+        plt.plt.close(fig) # Jawne zamknięcie figury zapobiega wyciekom pamięci
+        kod_base64 = base64.b64encode(bufor.getvalue()).decode("utf-8")
+        return kod_base64
     except Exception as e:
         print(f"Błąd generowania wykresu: {e}")
         return None
