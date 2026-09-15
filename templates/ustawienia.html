@@ -65,8 +65,8 @@
                 {% for raport in raporty %}
                     <div class="raport-item">
                         <label>{{ raport.nazwa }}</label>
-                        <a href="{{ url_for('pokaz_raport', nazwa_pliku=raport.nazwa) }}" target="_blank">Podgląd</a>
-                        <a href="{{ url_for('pobierz_raport', nazwa_pliku=raport.nazwa) }}">Pobierz</a>
+                        <a href="{{ url_for('pokaz_raport', nazwa_pliku=raport.nazwa) }}" target="_blank" class="przycisk-raport">Podgląd</a>
+                        <a href="{{ url_for('pobierz_raport', nazwa_pliku=raport.nazwa) }}" class="przycisk-raport">Pobierz</a>
                         <form method="post" action="{{ url_for('usun_pojedynczy_raport', nazwa_pliku=raport.nazwa) }}" style="display:inline;" onsubmit="return confirm('Czy na pewno chcesz usunąć ten raport?');">
                             <button type="submit">Usuń</button>
                         </form>
