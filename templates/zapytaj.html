@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <header>
+        <h1>Zapytaj AI</h1>
+    </header>
     <nav>
         <div class="link">
             <a href="{{url_for('strona_glowna')}}">Strona główna</a>
@@ -25,7 +28,6 @@
         </div>
     </nav>
     <main class="container">
-        <h1>Zapytaj AI</h1>
         <form action="/zapytaj" method="POST">
             <input type="hidden" name="styl" value="{{ styl }}">
             <textarea name="pytanie" id="pytanie" rows="4" placeholder="Wpisz swoje pytanie..."></textarea>
@@ -34,5 +36,8 @@
         <div class="answer-box">{% if odpowiedz %} <p>{{ odpowiedz }}</p> {% else %} <p>Tutaj pojawi się odpowiedź AI.</p> {% endif %}
         </div>
     </main>
+    <footer>
+        <a href="/polityka-prywatnosci">Polityka prywatności</a>
+    </footer>
 </body>
 </html>
